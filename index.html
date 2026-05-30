@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AuthenticFanGifts — Real Licensed Merch for Real Fans</title>
+  <meta name="description" content="Your go-to guide for officially licensed fandom gifts. Curated by fans, for fans. No fakes, no stress. Shop Grinch, NASA, Batman, Terminator & more." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.6; overflow-x: hidden; }
+
+    /* ============================================================
+       CSS VARIABLES
+    ============================================================ */
+    :root {
+      --navy:   #0A2540;
+      --green:  #00A86B;
+      --gold:   #FFD700;
+      --gold-dark: #e6c200;
+      --white:  #FFFFFF;
+      --gray:   #F5F5F5;
+      --gray2:  #e8e8e8;
+      --text:   #1a1a2e;
+      --text-muted: #6b7280;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(10,37,64,.12);
+      --shadow-lg: 0 8px 40px rgba(10,37,64,.18);
+    }
+
+    /* ============================================================
+       TYPOGRAPHY
+    ============================================================ */
+    h1,h2,h3,h4 { font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1.2; }
+    h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+    h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); }
+    h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+    p  { font-size: 1rem; }
+    a  { text-decoration: none; color: inherit; }
+
+    /* ============================================================
+       REUSABLE COMPONENTS
+    ============================================================ */
+    .badge-licensed {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--gold); color: var(--navy);
+      font-family: 'Poppins', sans-serif; font-weight: 700;
+      font-size: .7rem; padding: 3px 9px; border-radius: 20px;
+      letter-spacing: .04em; text-transform: uppercase;
+    }
+    .badge-licensed::before { content: "✓"; font-weight: 800; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 13px 28px; border-radius: 8px; font-family: 'Poppins', sans-serif;
+      font-weight: 700; font-size: .95rem; cursor: pointer; border: none;
+      transition: all .22s ease; white-space: nowrap;
+    }
+    .btn-gold   { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--gold-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,215,0,.4); }
+    .btn-outline { background: transparent; color: #fff; border: 2px solid #fff; }
+    .btn-outline:hover { background: rgba(255,255,255,.12); transform: translateY(-2px); }
+    .btn-green  { background: var(--green); color: #fff; }
+    .btn-green:hover { background: #009960; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,168,107,.35); }
+    .btn-navy   { background: var(--navy); color: #fff; }
+    .btn-navy:hover { background: #0d3060; transform: translateY(-2px); }
+
+    .section-tag {
+      display: inline-block; background: rgba(255,215,0,.15); color: var(--gold-dark);
+      border: 1px solid rgba(255,215,0,.4); border-radius: 20px;
+      font-family: 'Poppins', sans-serif; font-weight: 600; font-size: .78rem;
+      padding: 3px 14px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .section-tag.dark { background: rgba(0,168,107,.12); color: var(--green); border-color: rgba(0,168,107,.3); }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 80px 0; }
+
+    /* fade-in-up animation */
+    .fade-up { opacity: 0; transform: translateY(32px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.delay-1 { transition-delay: .1s; }
+    .fade-up.delay-2 { transition-delay: .2s; }
+    .fade-up.delay-3 { transition-delay: .3s; }
+    .fade-up.delay-4 { transition-delay: .4s; }
+    .fade-up.delay-5 { transition-delay: .5s; }
+
+    /* ============================================================
+       NAVIGATION
+    ============================================================ */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 24px; transition: background .3s, box-shadow .3s;
+    }
+    #navbar.scrolled {
+      background: var(--navy); box-shadow: 0 2px 20px rgba(0,0,0,.3);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.25rem;
+      color: var(--gold); letter-spacing: -.01em; flex-shrink: 0;
+    }
+    .nav-logo span { color: #fff; }
+    .nav-menu { display: flex; align-items: center; gap: 4px; list-style: none; }
+    .nav-item { position: relative; }
+    .nav-link {
+      display: flex; align-items: center; gap: 4px;
+      padding: 8px 14px; color: rgba(255,255,255,.85); font-size: .9rem;
+      font-weight: 500; border-radius: 6px; cursor: pointer;
+      transition: color .2s, background .2s; white-space: nowrap;
+    }
+    .nav-link:hover { color: #fff; background: rgba(255,255,255,.08); }
+    .nav-link .arrow { font-size: .65rem; transition: transform .2s; }
+    .nav-item:hover .arrow { transform: rotate(180deg); }
+    .nav-shop { background: var(--gold) !important; color: var(--navy) !important; font-weight: 700 !important; border-radius: 20px !important; padding: 8px 18px !important; }
+    .nav-shop:hover { background: var(--gold-dark) !important; }
+    .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-newsletter { color: rgba(255,255,255,.8); font-size: .85rem; font-weight: 500; padding: 7px 14px; border: 1px solid rgba(255,255,255,.25); border-radius: 20px; transition: all .2s; }
+    .nav-newsletter:hover { background: rgba(255,255,255,.1); color: #fff; }
+
+    /* Mega Menu */
+    .mega-menu {
+      position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+      background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-lg);
+      min-width: 480px; padding: 24px; opacity: 0; pointer-events: none;
+      transition: opacity .2s, transform .2s; transform: translateX(-50%) translateY(-8px);
+      border: 1px solid var(--gray2);
+    }
+    .nav-item:hover .mega-menu { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); }
+    .mega-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .mega-col h4 { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--gray2); }
+    .mega-links { display: flex; flex-direction: column; gap: 3px; }
+    .mega-link {
+      display: flex; align-items: center; gap: 8px; padding: 7px 10px;
+      border-radius: 7px; font-size: .88rem; color: var(--text); font-weight: 500;
+      transition: background .15s, color .15s;
+    }
+    .mega-link:hover { background: var(--gray); color: var(--navy); }
+    .mega-link .icon { font-size: 1rem; width: 20px; text-align: center; }
+    .mega-featured {
+      background: var(--navy); border-radius: 10px; padding: 16px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .mega-featured img { width: 100%; height: 120px; object-fit: cover; border-radius: 7px; }
+    .mega-featured span { color: rgba(255,255,255,.7); font-size: .75rem; }
+    .mega-featured strong { color: #fff; font-size: .9rem; display: block; }
+    .mega-featured a { color: var(--gold); font-size: .8rem; font-weight: 600; }
+
+    /* Fandoms mega */
+    .fandom-mega { min-width: 560px; }
+    .fandom-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .fandom-chip {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 10px 8px; border-radius: 8px; font-size: .78rem; font-weight: 600;
+      color: var(--navy); border: 1px solid var(--gray2); transition: all .15s; text-align: center;
+    }
+    .fandom-chip:hover { border-color: var(--gold); background: rgba(255,215,0,.08); }
+    .fandom-chip .emoji { font-size: 1.4rem; }
+
+    /* Mobile Nav */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .hamburger span { width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all .3s; }
+    .mobile-menu {
+      position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
+      background: var(--navy); z-index: 999; padding: 20px 24px;
+      overflow-y: auto; transform: translateX(100%); transition: transform .3s ease;
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-nav-item { border-bottom: 1px solid rgba(255,255,255,.08); }
+    .mobile-nav-link { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; color: #fff; font-size: 1rem; font-weight: 600; cursor: pointer; }
+    .mobile-sub { display: none; padding: 0 0 12px 16px; }
+    .mobile-sub.open { display: block; }
+    .mobile-sub-link { display: block; padding: 8px 0; color: rgba(255,255,255,.7); font-size: .9rem; }
+    .mobile-sub-link:hover { color: var(--gold); }
+    .mobile-shop-btn { margin-top: 20px; width: 100%; padding: 15px; background: var(--gold); color: var(--navy); font-family: 'Poppins',sans-serif; font-weight: 700; font-size: 1rem; border: none; border-radius: 10px; cursor: pointer; }
+
+    /* ============================================================
+       SECTION 1 — HERO
+    ============================================================ */
+    #hero {
+      min-height: 90vh; display: flex; flex-direction: column; justify-content: center;
+      position: relative; padding: 100px 0 60px;
+      background: var(--navy);
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: url('Mockup Lifestyle Male/Terminator (1).png');
+      background-size: cover; background-position: center 30%;
+      filter: brightness(.35) saturate(.8);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(135deg, rgba(10,37,64,.85) 0%, rgba(0,168,107,.15) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-content .container { max-width: 780px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,215,0,.15); border: 1px solid rgba(255,215,0,.35);
+      border-radius: 20px; padding: 5px 14px; color: var(--gold);
+      font-size: .8rem; font-weight: 600; letter-spacing: .06em;
+      text-transform: uppercase; margin-bottom: 20px;
+    }
+    .hero-content h1 { color: #fff; margin-bottom: 20px; }
+    .hero-content h1 span { color: var(--gold); }
+    .hero-sub { color: rgba(255,255,255,.82); font-size: 1.15rem; max-width: 580px; margin-bottom: 36px; line-height: 1.65; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 44px; }
+    .trust-bar {
+      display: flex; gap: 28px; flex-wrap: wrap; align-items: center;
+      padding: 16px 20px; background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12); border-radius: 10px;
+      backdrop-filter: blur(8px); width: fit-content;
+    }
+    .trust-item { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,.85); font-size: .85rem; font-weight: 500; }
+    .trust-item .icon { font-size: 1rem; }
+
+    /* ============================================================
+       SECTION 2 — POPULAR FANDOMS
+    ============================================================ */
+    #fandoms { background: var(--gray); }
+    .section-header { text-align: center; margin-bottom: 48px; }
+    .section-header h2 { color: var(--navy); margin-bottom: 10px; }
+    .section-header p { color: var(--text-muted); max-width: 520px; margin: 0 auto; }
+    .fandoms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .fandom-card {
+      border-radius: var(--radius); overflow: hidden; cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
+      border: 2px solid transparent; position: relative;
+    }
+    .fandom-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--gold); }
+    .fandom-card-inner { padding: 24px; aspect-ratio: 2/3; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; position: relative; overflow: hidden; }
+    .fandom-card-inner::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.3) 45%, transparent 75%);
+    }
+    .fandom-card-bg { position: absolute; inset: 0; background-size: cover; background-position: center; z-index: 0; transition: transform .4s; }
+    .fandom-card:hover .fandom-card-bg { transform: scale(1.05); }
+    .fandom-card-content { position: relative; z-index: 1; }
+    .fandom-label { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--gold); font-weight: 600; margin-bottom: 4px; }
+    .fandom-card-content h3 { color: #fff; font-size: 1.2rem; margin-bottom: 4px; }
+    .fandom-card-content p { color: rgba(255,255,255,.75); font-size: .82rem; }
+    .fandom-card-action { position: relative; z-index: 1; }
+    .fandom-card-action a {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--gold); font-weight: 700; font-size: .85rem;
+      transition: gap .2s;
+    }
+    .fandom-card-action a:hover { gap: 10px; }
+
+    /* Fandom Card Colors */
+    .fc-grinch    .fandom-card-bg { background-color: #1a4a1a; background-image: url('Mockup Lifestyle Male/The Grinch (2).png'); }
+    .fc-terminator .fandom-card-bg { background-color: #1a0a0a; background-image: url('Mockup Lifestyle Male/Terminator (3).png'); }
+    .fc-nasa      .fandom-card-bg { background-color: #0a1a3a; background-image: url('Mockup Lifestyle Male/Nasa (2).png'); }
+    .fc-batman    .fandom-card-bg { background-color: #1a1a0a; background-image: url('Mockup Lifestyle Male/Batman (2).png'); }
+    .fc-halloween .fandom-card-bg { background-color: #2a0a0a; background-image: url('Mockup Lifestyle Male/Halloween (2).png'); }
+    .fc-friends   .fandom-card-bg { background-color: #0a1a2a; }
+
+    /* ============================================================
+       SECTION 3 — SEASONAL GIFT GUIDES
+    ============================================================ */
+    #gift-guides { background: #fff; }
+    .guides-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .guide-card {
+      border-radius: var(--radius); overflow: hidden;
+      position: relative; aspect-ratio: 2/3; cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
+    }
+    .guide-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .guide-card-img {
+      position: absolute; inset: 0; background-size: cover; background-position: center;
+      transition: transform .4s;
+    }
+    .guide-card:hover .guide-card-img { transform: scale(1.04); }
+    .guide-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,37,64,.92) 0%, rgba(10,37,64,.3) 60%, transparent 100%);
+    }
+    .guide-card-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; z-index: 1; }
+    .guide-occasion { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--gold); font-weight: 600; margin-bottom: 6px; }
+    .guide-card-content h3 { color: #fff; margin-bottom: 12px; font-size: 1.2rem; }
+    .guide-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--gold); color: var(--navy); padding: 8px 16px;
+      border-radius: 6px; font-weight: 700; font-size: .82rem;
+      transition: all .2s;
+    }
+    .guide-cta:hover { background: var(--gold-dark); }
+
+    .gc-grinch    .guide-card-img { background-image: url('Mockup Lifestyle Male/The Grinch (1).png'); background-color: #1a4a1a; }
+    .gc-valentine .guide-card-img { background-color: #3a0a2a; background-image: url('Mockup Lifestyle Male/Batman (3).png'); }
+    .gc-fathers   .guide-card-img { background-image: url('Mockup Lifestyle Male/Nasa (4).png'); background-color: #0a1a4a; }
+    .gc-halloween .guide-card-img { background-image: url('Mockup Lifestyle Male/Halloween (1).png'); background-color: #1a0000; }
+
+    /* ============================================================
+       SECTION 4 — REAL vs FAKE
+    ============================================================ */
+    #real-vs-fake { background: var(--gray); }
+    .rvf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; }
+    .rvf-comparison {
+      background: #fff; border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow);
+    }
+    .rvf-comparison h3 { margin-bottom: 20px; color: var(--navy); text-align: center; }
+    .rvf-row { display: grid; grid-template-columns: 1fr 100px 1fr; gap: 8px; align-items: center; margin-bottom: 12px; }
+    .rvf-label { text-align: center; font-size: .72rem; text-transform: uppercase; font-weight: 700; letter-spacing: .06em; }
+    .rvf-real  { background: rgba(0,168,107,.08); border: 1px solid rgba(0,168,107,.25); border-radius: 8px; padding: 10px 12px; font-size: .85rem; font-weight: 500; color: #056543; }
+    .rvf-fake  { background: rgba(220,38,38,.07); border: 1px solid rgba(220,38,38,.2); border-radius: 8px; padding: 10px 12px; font-size: .85rem; font-weight: 500; color: #9b1c1c; text-align: right; }
+    .rvf-vs    { text-align: center; font-weight: 800; font-size: .9rem; color: var(--text-muted); }
+    .rvf-header { display: grid; grid-template-columns: 1fr 100px 1fr; gap: 8px; margin-bottom: 16px; }
+    .rvf-header-real { background: var(--green); color: #fff; border-radius: 7px; padding: 8px; text-align: center; font-weight: 700; font-size: .82rem; }
+    .rvf-header-fake { background: #dc2626; color: #fff; border-radius: 7px; padding: 8px; text-align: center; font-weight: 700; font-size: .82rem; }
+    .rvf-guides { display: flex; flex-direction: column; gap: 14px; }
+    .rvf-guide-card {
+      background: #fff; border-radius: 10px; padding: 18px 20px;
+      box-shadow: var(--shadow); border-left: 4px solid var(--green);
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .rvf-guide-card h4 { font-size: .92rem; color: var(--navy); margin-bottom: 3px; }
+    .rvf-guide-card p { font-size: .8rem; color: var(--text-muted); }
+    .rvf-guide-link { color: var(--gold-dark); font-weight: 700; font-size: .82rem; white-space: nowrap; }
+    .rvf-guide-link:hover { text-decoration: underline; }
+    .rvf-guide-icon { font-size: 1.8rem; flex-shrink: 0; }
+
+    /* ============================================================
+       SECTION 5 — TRENDING PRODUCTS
+    ============================================================ */
+    #trending { background: #fff; }
+    .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .product-card {
+      border-radius: var(--radius); border: 1px solid var(--gray2); overflow: hidden;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
+    }
+    .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--gold); }
+    .product-img {
+      position: relative; overflow: hidden;
+      aspect-ratio: 2/3; background: var(--gray);
+    }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; }
+    .product-card:hover .product-img img { transform: scale(1.04); }
+    .product-img .badge-licensed { position: absolute; top: 10px; left: 10px; }
+    .product-body { padding: 16px; }
+    .product-fandom { font-size: .72rem; text-transform: uppercase; letter-spacing: .07em; color: var(--green); font-weight: 600; margin-bottom: 4px; }
+    .product-name { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: .95rem; color: var(--navy); margin-bottom: 10px; line-height: 1.3; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .product-price { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--navy); }
+    .product-btn {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--green); color: #fff; padding: 8px 14px;
+      border-radius: 7px; font-weight: 700; font-size: .8rem; transition: all .2s;
+    }
+    .product-btn:hover { background: #009960; transform: translateY(-1px); }
+    .products-disclaimer { text-align: center; margin-top: 20px; color: var(--text-muted); font-size: .8rem; font-style: italic; }
+
+    /* ============================================================
+       SECTION 6 — WHY CHOOSE US
+    ============================================================ */
+    #trust { background: var(--navy); }
+    #trust .section-header h2 { color: #fff; }
+    #trust .section-header p { color: rgba(255,255,255,.65); }
+    .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .trust-card {
+      text-align: center; padding: 32px 20px;
+      border-radius: var(--radius); border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.04); transition: all .25s;
+    }
+    .trust-card:hover { border-color: var(--gold); background: rgba(255,215,0,.05); transform: translateY(-4px); }
+    .trust-icon { font-size: 2.4rem; margin-bottom: 16px; display: block; }
+    .trust-card h3 { color: #fff; font-size: 1rem; margin-bottom: 8px; }
+    .trust-card p { color: rgba(255,255,255,.6); font-size: .85rem; line-height: 1.55; }
+
+    /* ============================================================
+       SECTION 7 — NEWSLETTER
+    ============================================================ */
+    #newsletter { background: var(--green); padding: 70px 0; }
+    .newsletter-inner { max-width: 620px; margin: 0 auto; text-align: center; }
+    #newsletter h2 { color: #fff; margin-bottom: 10px; }
+    #newsletter p { color: rgba(255,255,255,.85); margin-bottom: 32px; }
+    .newsletter-form { display: flex; gap: 10px; margin-bottom: 20px; }
+    .newsletter-input {
+      flex: 1; padding: 14px 18px; border-radius: 8px; border: none;
+      font-size: .95rem; outline: none; font-family: 'Inter', sans-serif;
+      box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    }
+    .newsletter-input::placeholder { color: #9ca3af; }
+    .newsletter-submit {
+      background: var(--gold); color: var(--navy); padding: 14px 24px;
+      border-radius: 8px; border: none; font-family: 'Poppins', sans-serif;
+      font-weight: 700; font-size: .95rem; cursor: pointer; white-space: nowrap;
+      transition: all .2s;
+    }
+    .newsletter-submit:hover { background: var(--gold-dark); transform: translateY(-2px); }
+    .fandom-checks { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 4px; }
+    .fandom-check label {
+      display: flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,.85); font-size: .83rem; cursor: pointer;
+      background: rgba(255,255,255,.15); border-radius: 20px; padding: 5px 12px;
+      transition: background .2s;
+    }
+    .fandom-check label:hover { background: rgba(255,255,255,.25); }
+    .fandom-check input { accent-color: var(--gold); }
+    .newsletter-toast {
+      display: none; background: rgba(255,255,255,.2); border-radius: 8px;
+      padding: 12px 20px; color: #fff; font-weight: 600; margin-top: 16px;
+      border: 1px solid rgba(255,255,255,.3);
+    }
+
+    /* ============================================================
+       SECTION 8 — TESTIMONIALS
+    ============================================================ */
+    #testimonials { background: var(--gray); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testimonial-card {
+      background: #fff; border-radius: var(--radius); padding: 24px;
+      box-shadow: var(--shadow); border-top: 3px solid var(--gold);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .testimonial-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .stars { color: var(--gold); font-size: 1rem; margin-bottom: 12px; letter-spacing: 2px; }
+    .testimonial-text { font-size: .9rem; color: #374151; line-height: 1.65; margin-bottom: 16px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-family: 'Poppins', sans-serif; font-weight: 700;
+      font-size: 1rem; color: #fff; flex-shrink: 0;
+    }
+    .testimonial-author-info strong { font-size: .9rem; color: var(--navy); display: block; }
+    .testimonial-author-info span { font-size: .78rem; color: var(--text-muted); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer { background: var(--navy); padding: 60px 0 0; }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+    .footer-brand .logo { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.3rem; color: var(--gold); margin-bottom: 10px; }
+    .footer-brand .logo span { color: #fff; }
+    .footer-brand p { color: rgba(255,255,255,.55); font-size: .85rem; max-width: 240px; margin-bottom: 18px; line-height: 1.6; }
+    .social-links { display: flex; gap: 10px; }
+    .social-link {
+      width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,.08);
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+      border: 1px solid rgba(255,255,255,.1); transition: all .2s; color: #fff;
+    }
+    .social-link:hover { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+    .footer-col h4 { color: #fff; font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 8px; }
+    .footer-links a { color: rgba(255,255,255,.55); font-size: .85rem; transition: color .2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.1); padding: 20px 0;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .footer-disclaimer { color: rgba(255,255,255,.45); font-size: .78rem; }
+    .footer-legal { display: flex; gap: 20px; }
+    .footer-legal a { color: rgba(255,255,255,.45); font-size: .78rem; transition: color .2s; }
+    .footer-legal a:hover { color: var(--gold); }
+
+    /* ============================================================
+       MOBILE STICKY CTA
+    ============================================================ */
+    .mobile-sticky-cta {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 998;
+      background: var(--gold); padding: 14px 20px;
+      text-align: center; font-family: 'Poppins', sans-serif; font-weight: 700;
+      font-size: 1rem; color: var(--navy); box-shadow: 0 -4px 20px rgba(0,0,0,.2);
+    }
+    .mobile-sticky-cta a { color: inherit; }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 1024px) {
+      .trust-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 56px 0; }
+      .nav-menu, .nav-right .nav-newsletter { display: none; }
+      .hamburger { display: flex; }
+      .hero-btns .btn { flex: 1; }
+      .trust-bar { gap: 14px; }
+      .fandoms-grid { grid-template-columns: repeat(2, 1fr); }
+      .guides-grid { grid-template-columns: 1fr; }
+      .rvf-grid { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+      .mobile-sticky-cta { display: block; }
+      body { padding-bottom: 56px; }
+      .newsletter-form { flex-direction: column; }
+    }
+
+    @media (max-width: 480px) {
+      .fandoms-grid { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: 1fr; }
+      .trust-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .rvf-row { grid-template-columns: 1fr 50px 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+============================================================ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <!-- Logo -->
+    <a href="/" class="nav-logo">Authentic<span>Fan</span>Gifts</a>
+
+    <!-- Desktop Menu -->
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="#" class="nav-link">Home</a>
+      </li>
+
+      <li class="nav-item">
+        <span class="nav-link">Gift Guides <span class="arrow">▾</span></span>
+        <div class="mega-menu">
+          <div class="mega-menu-grid">
+            <div class="mega-col">
+              <h4>By Occasion</h4>
+              <div class="mega-links">
+                <a href="#gift-guides" class="mega-link"><span class="icon">🎄</span> Christmas &amp; Holiday</a>
+                <a href="#gift-guides" class="mega-link"><span class="icon">🎃</span> Halloween &amp; Horror</a>
+                <a href="#gift-guides" class="mega-link"><span class="icon">💝</span> Valentine's Day</a>
+                <a href="#gift-guides" class="mega-link"><span class="icon">👨</span> Father's Day</a>
+                <a href="#gift-guides" class="mega-link"><span class="icon">👩</span> Mother's Day</a>
+                <a href="#gift-guides" class="mega-link"><span class="icon">📚</span> Back to School</a>
+                <a href="#gift-guides" class="mega-link" style="color:var(--green);font-weight:700">→ All Gift Guides</a>
+              </div>
+            </div>
+            <div class="mega-col">
+              <h4>Featured Guide</h4>
+              <div class="mega-featured">
+                <img src="Mockup Lifestyle Male/The Grinch (3).png" alt="Grinch Gift Guide" />
+                <span>⭐ Most Popular</span>
+                <strong>Grinch Christmas Gift Guide 2025</strong>
+                <a href="#gift-guides">View Guide →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <span class="nav-link">Fandoms <span class="arrow">▾</span></span>
+        <div class="mega-menu fandom-mega">
+          <h4 style="font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #e8e8e8">Shop by Fandom</h4>
+          <div class="fandom-grid">
+            <a href="#fandoms" class="fandom-chip"><span class="emoji">🟢</span>The Grinch</a>
+            <a href="#fandoms" class="fandom-chip"><span class="emoji">🤖</span>Terminator</a>
+            <a href="#fandoms" class="fandom-chip"><span class="emoji">🚀</span>NASA</a>
+            <a href="#fandoms" class="fandom-chip"><span class="emoji">🦇</span>Batman</a>
+            <a href="#fandoms" class="fandom-chip"><span class="emoji">☕</span>Friends</a>
+            <a href="#fandoms" class="fandom-chip"><span class="emoji">🎃</span>Horror</a>
+            <a href="#fandoms" class="fandom-chip"><span class="emoji">👸</span>Wonder Woman</a>
+            <a href="#fandoms" class="fandom-chip"><span class="emoji">🌀</span>Rick &amp; Morty</a>
+            <a href="#fandoms" class="fandom-chip"><span class="emoji">💥</span>Powerpuff Girls</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="nav-item"><a href="#real-vs-fake" class="nav-link">Real vs Fake</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
+      <li class="nav-item"><a href="#newsletter" class="nav-link">Newsletter</a></li>
+      <li class="nav-item">
+        <a href="https://senprints.com?utm_source=authenticfangifts&utm_medium=navbar&utm_campaign=shop-now"
+           target="_blank" class="nav-link nav-shop">Shop Now ↗</a>
+      </li>
+    </ul>
+
+    <!-- Right -->
+    <div class="nav-right">
+      <a href="#newsletter" class="nav-newsletter">Join Free Newsletter</a>
+      <div class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-nav-item">
+    <div class="mobile-nav-link" onclick="toggleSub('sub-guides')">
+      Gift Guides <span>▾</span>
+    </div>
+    <div class="mobile-sub" id="sub-guides">
+      <a href="#gift-guides" class="mobile-sub-link">🎄 Christmas &amp; Holiday</a>
+      <a href="#gift-guides" class="mobile-sub-link">🎃 Halloween &amp; Horror</a>
+      <a href="#gift-guides" class="mobile-sub-link">💝 Valentine's Day</a>
+      <a href="#gift-guides" class="mobile-sub-link">👨 Father's Day</a>
+    </div>
+  </div>
+  <div class="mobile-nav-item">
+    <div class="mobile-nav-link" onclick="toggleSub('sub-fandoms')">
+      Fandoms <span>▾</span>
+    </div>
+    <div class="mobile-sub" id="sub-fandoms">
+      <a href="#fandoms" class="mobile-sub-link">🟢 The Grinch</a>
+      <a href="#fandoms" class="mobile-sub-link">🤖 Terminator</a>
+      <a href="#fandoms" class="mobile-sub-link">🚀 NASA</a>
+      <a href="#fandoms" class="mobile-sub-link">🦇 Batman</a>
+      <a href="#fandoms" class="mobile-sub-link">☕ Friends</a>
+      <a href="#fandoms" class="mobile-sub-link">🎃 Horror</a>
+    </div>
+  </div>
+  <div class="mobile-nav-item">
+    <a href="#real-vs-fake" class="mobile-nav-link">Real vs Fake</a>
+  </div>
+  <div class="mobile-nav-item">
+    <a href="#" class="mobile-nav-link">Blog</a>
+  </div>
+  <div class="mobile-nav-item">
+    <a href="#newsletter" class="mobile-nav-link">Newsletter</a>
+  </div>
+  <button class="mobile-shop-btn" onclick="window.open('https://senprints.com?utm_source=authenticfangifts&utm_medium=mobile-menu&utm_campaign=shop-now','_blank')">
+    🛍️ Shop Now on SenPrints
+  </button>
+</div>
+
+
+<!-- ============================================================
+     SECTION 1 — HERO
+============================================================ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="container">
+      <div class="fade-up">
+        <div class="hero-eyebrow">✦ Officially Licensed Only</div>
+        <h1>Real Licensed Merch<br><span>for Real Fans</span></h1>
+        <p class="hero-sub">Your go-to guide for officially licensed fandom gifts — curated by fans, for fans. No fakes, no stress. Just authentic merch worth gifting.</p>
+        <div class="hero-btns">
+          <a href="#gift-guides" class="btn btn-gold">🎁 Explore Gift Guides</a>
+          <a href="#newsletter" class="btn btn-outline">📩 Join Free Newsletter</a>
+        </div>
+        <div class="trust-bar">
+          <div class="trust-item"><span class="icon">✅</span> Officially Licensed Partners</div>
+          <div class="trust-item"><span class="icon">🚚</span> Ships to US, EU, CA, AU</div>
+          <div class="trust-item"><span class="icon">🔒</span> 100% Authentic Guarantee</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 2 — POPULAR FANDOMS
+============================================================ -->
+<section id="fandoms">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag dark">Browse by Fandom</div>
+      <h2>Popular Fandoms This Season</h2>
+      <p>From holiday classics to cult favorites — find the perfect licensed gift for every fan in your life.</p>
+    </div>
+
+    <div class="fandoms-grid">
+      <div class="fandom-card fc-grinch fade-up">
+        <div class="fandom-card-inner">
+          <div class="fandom-card-bg"></div>
+          <div class="fandom-card-content">
+            <div class="fandom-label">🎄 Christmas Favorite</div>
+            <h3>The Grinch</h3>
+            <p>Classic holiday fun for the whole family</p>
+          </div>
+          <div class="fandom-card-action">
+            <a href="#gift-guides">View Gift Guide →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="fandom-card fc-terminator fade-up delay-1">
+        <div class="fandom-card-inner">
+          <div class="fandom-card-bg"></div>
+          <div class="fandom-card-content">
+            <div class="fandom-label">🤖 Action & Sci-Fi</div>
+            <h3>The Terminator</h3>
+            <p>Licensed apparel for the ultimate action fan</p>
+          </div>
+          <div class="fandom-card-action">
+            <a href="#gift-guides">View Gift Guide →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="fandom-card fc-nasa fade-up delay-2">
+        <div class="fandom-card-inner">
+          <div class="fandom-card-bg"></div>
+          <div class="fandom-card-content">
+            <div class="fandom-label">🚀 Space & Science</div>
+            <h3>NASA</h3>
+            <p>Official NASA gear for space explorers</p>
+          </div>
+          <div class="fandom-card-action">
+            <a href="#gift-guides">View Gift Guide →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="fandom-card fc-batman fade-up delay-1">
+        <div class="fandom-card-inner">
+          <div class="fandom-card-bg"></div>
+          <div class="fandom-card-content">
+            <div class="fandom-label">🦇 Warner Bros.</div>
+            <h3>Batman</h3>
+            <p>Iconic DC licensed merch &amp; gift ideas</p>
+          </div>
+          <div class="fandom-card-action">
+            <a href="#gift-guides">View Gift Guide →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="fandom-card fc-halloween fade-up delay-2">
+        <div class="fandom-card-inner">
+          <div class="fandom-card-bg"></div>
+          <div class="fandom-card-content">
+            <div class="fandom-label">🎃 Horror Collection</div>
+            <h3>Horror &amp; Halloween</h3>
+            <p>Gremlins, Hellraiser &amp; more licensed picks</p>
+          </div>
+          <div class="fandom-card-action">
+            <a href="#gift-guides">View Gift Guide →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="fandom-card fc-friends fade-up delay-3">
+        <div class="fandom-card-inner" style="background: linear-gradient(135deg, #1a2a4a, #2a3a5a);">
+          <div class="fandom-card-content">
+            <div class="fandom-label">☕ TV Classic</div>
+            <h3>Friends</h3>
+            <p>Official licensed Friends TV merch &amp; gifts</p>
+          </div>
+          <div class="fandom-card-action">
+            <a href="#gift-guides">View Gift Guide →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 3 — SEASONAL GIFT GUIDES
+============================================================ -->
+<section id="gift-guides">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">🎁 Curated Guides</div>
+      <h2>Gift Guides for Every Occasion</h2>
+      <p>Expertly curated picks for every type of fan — season by season, fandom by fandom.</p>
+    </div>
+
+    <div class="guides-grid">
+      <div class="guide-card gc-grinch fade-up">
+        <div class="guide-card-img"></div>
+        <div class="guide-card-overlay"></div>
+        <div class="guide-card-content">
+          <div class="guide-occasion">🎄 Christmas 2025</div>
+          <h3>Grinch Christmas Gift Guide — Perfect for the Whole Family</h3>
+          <a href="#" class="guide-cta">View Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card gc-valentine fade-up delay-1">
+        <div class="guide-card-img"></div>
+        <div class="guide-card-overlay"></div>
+        <div class="guide-card-content">
+          <div class="guide-occasion">💝 Valentine's Day</div>
+          <h3>Valentine's Day Fandom Gifts — Friends, Wonder Woman &amp; More</h3>
+          <a href="#" class="guide-cta">View Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card gc-fathers fade-up delay-2">
+        <div class="guide-card-img"></div>
+        <div class="guide-card-overlay"></div>
+        <div class="guide-card-content">
+          <div class="guide-occasion">👨 Father's Day</div>
+          <h3>Best Gifts for Dad — NASA, Terminator &amp; Batman Picks</h3>
+          <a href="#" class="guide-cta">View Guide →</a>
+        </div>
+      </div>
+
+      <div class="guide-card gc-halloween fade-up delay-3">
+        <div class="guide-card-img"></div>
+        <div class="guide-card-overlay"></div>
+        <div class="guide-card-content">
+          <div class="guide-occasion">🎃 Halloween Collection</div>
+          <h3>Licensed Horror Merch — Gremlins, Hellraiser &amp; More</h3>
+          <a href="#" class="guide-cta">View Guide →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 4 — REAL vs FAKE
+============================================================ -->
+<section id="real-vs-fake">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">🛡️ Education Hub</div>
+      <h2>Don't Get Scammed — How to Spot Real Licensed Merch</h2>
+      <p>We only recommend officially licensed products. Here's how to tell the difference.</p>
+    </div>
+
+    <div class="rvf-grid">
+      <!-- Comparison Table -->
+      <div class="rvf-comparison fade-up">
+        <h3>Real ✅ vs Fake ❌ — Side by Side</h3>
+        <div class="rvf-header">
+          <div class="rvf-header-real">✅ Official Licensed</div>
+          <div></div>
+          <div class="rvf-header-fake">❌ Bootleg / Fake</div>
+        </div>
+        <div class="rvf-row">
+          <div class="rvf-real">Sharp, vibrant, fade-resistant print</div>
+          <div class="rvf-vs">🖨️<br><small>Print</small></div>
+          <div class="rvf-fake">Dull, cracked, bleeds in wash</div>
+        </div>
+        <div class="rvf-row">
+          <div class="rvf-real">Official holographic hang tag + brand label</div>
+          <div class="rvf-vs">🏷️<br><small>Tags</small></div>
+          <div class="rvf-fake">No tag or generic "Made in China" sticker</div>
+        </div>
+        <div class="rvf-row">
+          <div class="rvf-real">Clean, even stitching on all seams</div>
+          <div class="rvf-vs">🧵<br><small>Quality</small></div>
+          <div class="rvf-fake">Loose threads, uneven seams</div>
+        </div>
+        <div class="rvf-row">
+          <div class="rvf-real">$25–$45 retail — fair licensed price</div>
+          <div class="rvf-vs">💰<br><small>Price</small></div>
+          <div class="rvf-fake">"Too good to be true" under $10</div>
+        </div>
+      </div>
+
+      <!-- Guide Cards -->
+      <div class="rvf-guides fade-up delay-2">
+        <div class="rvf-guide-card">
+          <span class="rvf-guide-icon">🟢</span>
+          <div>
+            <h4>How to Tell if Your Grinch Shirt is Official</h4>
+            <p>The complete checklist every Grinch fan needs before buying.</p>
+          </div>
+          <a href="#" class="rvf-guide-link">Read →</a>
+        </div>
+        <div class="rvf-guide-card" style="border-color:#0A2540">
+          <span class="rvf-guide-icon">🚀</span>
+          <div>
+            <h4>Official NASA Merch vs Bootleg — Full Breakdown</h4>
+            <p>What NASA's licensing program actually covers — and what it doesn't.</p>
+          </div>
+          <a href="#" class="rvf-guide-link">Read →</a>
+        </div>
+        <div class="rvf-guide-card" style="border-color:#991b1b">
+          <span class="rvf-guide-icon">🤖</span>
+          <div>
+            <h4>Terminator Licensed vs Knockoff — Spot the Difference</h4>
+            <p>T-800 fans, here's how to make sure your merch is battle-tested authentic.</p>
+          </div>
+          <a href="#" class="rvf-guide-link">Read →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 5 — TRENDING PRODUCTS (Real data from SenPrints)
+============================================================ -->
+<section id="trending">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag dark">🔥 This Week</div>
+      <h2>Trending Authentic Picks</h2>
+      <p>All items are officially licensed — click to shop securely on our partner store SenPrints.</p>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- Batman Comics Logo -->
+      <article class="product-card fade-up">
+        <div class="product-img">
+          <img src="https://img.cloudimgs.net/rx/1000x1250/s2/p/f0663dd3-9105-4942-8807-4e2375adc145/00cf070b80a990bbd086b120bd819ebf.png"
+               alt="Batman Comics Logo T-Shirt — Officially Licensed" loading="lazy" />
+          <span class="badge-licensed">Officially Licensed</span>
+        </div>
+        <div class="product-body">
+          <div class="product-fandom">🦇 Batman / Warner Bros.</div>
+          <div class="product-name">Batman Comics Logo Unisex T-Shirt</div>
+          <div class="product-footer">
+            <div class="product-price">$28.95</div>
+            <a href="https://senprints.com/batman-batman-comics-logo-unisex-crew-neck-t-shirt?utm_source=authenticfangifts&utm_medium=trending&utm_campaign=batman-comics-logo"
+               target="_blank" class="product-btn">Shop ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Batman Logo -->
+      <article class="product-card fade-up delay-1">
+        <div class="product-img">
+          <img src="https://img.cloudimgs.net/rx/1000x1250/s2/p/a6b74fc0-42d8-422b-8835-fec81e597d01/cf6f66717f69e87050f669436d791cd1.png"
+               alt="Batman Logo Navy T-Shirt — Officially Licensed" loading="lazy" />
+          <span class="badge-licensed">Officially Licensed</span>
+        </div>
+        <div class="product-body">
+          <div class="product-fandom">🦇 Batman / Warner Bros.</div>
+          <div class="product-name">Batman Logo Unisex T-Shirt — Navy</div>
+          <div class="product-footer">
+            <div class="product-price">$28.95</div>
+            <a href="https://senprints.com/batman-batman-logo-unisex-crew-neck-t-shirt?utm_source=authenticfangifts&utm_medium=trending&utm_campaign=batman-logo"
+               target="_blank" class="product-btn">Shop ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Batman Robin Dies -->
+      <article class="product-card fade-up delay-2">
+        <div class="product-img">
+          <img src="https://img.cloudimgs.net/rx/1000x1250/s2/p/2b33d65d-98ea-4d07-ba08-931dce4e8b28/cb6a78bfd55d864499268f0c6f0d1fda.png"
+               alt="Batman Robin Dies T-Shirt — Officially Licensed" loading="lazy" />
+          <span class="badge-licensed">Officially Licensed</span>
+        </div>
+        <div class="product-body">
+          <div class="product-fandom">🦇 Batman / Warner Bros.</div>
+          <div class="product-name">Batman "Robin Dies" Unisex T-Shirt</div>
+          <div class="product-footer">
+            <div class="product-price">$28.95</div>
+            <a href="https://senprints.com/batman-batman-robin-dies-unisex-crew-neck-t-shirt?utm_source=authenticfangifts&utm_medium=trending&utm_campaign=batman-robin-dies"
+               target="_blank" class="product-btn">Shop ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- NASA 1981 -->
+      <article class="product-card fade-up delay-1">
+        <div class="product-img">
+          <img src="https://img.cloudimgs.net/rx/1000x1250/s2/p/b6e7dd50-3c2a-4845-a78d-2c5a381b8c59/8dd79dde12dc51a5c360c46ffed35a3b.png"
+               alt="NASA 1981 Unisex T-Shirt — Officially Licensed" loading="lazy" />
+          <span class="badge-licensed">Officially Licensed</span>
+        </div>
+        <div class="product-body">
+          <div class="product-fandom">🚀 NASA Official</div>
+          <div class="product-name">NASA 1981 Unisex T-Shirt — Royal Blue</div>
+          <div class="product-footer">
+            <div class="product-price">$28.95</div>
+            <a href="https://senprints.com/nasa-nasa-1981-unisex-crew-neck-t-shirt?utm_source=authenticfangifts&utm_medium=trending&utm_campaign=nasa-1981"
+               target="_blank" class="product-btn">Shop ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- NASA Badges -->
+      <article class="product-card fade-up delay-2">
+        <div class="product-img">
+          <img src="https://img.cloudimgs.net/rx/1000x1250/s2/p/2f5bdb26-d64e-4bfe-a55b-4c965b674c56/071fc157e39d1c86986137c187459782.png"
+               alt="NASA Badges T-Shirt — Officially Licensed" loading="lazy" />
+          <span class="badge-licensed">Officially Licensed</span>
+        </div>
+        <div class="product-body">
+          <div class="product-fandom">🚀 NASA Official</div>
+          <div class="product-name">NASA Mission Badges Unisex T-Shirt</div>
+          <div class="product-footer">
+            <div class="product-price">$28.95</div>
+            <a href="https://senprints.com/nasa-nasa-badges-unisex-crew-neck-t-shirt?utm_source=authenticfangifts&utm_medium=trending&utm_campaign=nasa-badges"
+               target="_blank" class="product-btn">Shop ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- NASA Faded -->
+      <article class="product-card fade-up delay-3">
+        <div class="product-img">
+          <img src="https://img.cloudimgs.net/rx/1000x1250/s2/p/557960e9-761d-4031-88bd-ae525961f8f2/4eb4e73de86eae900c7e5945c6201753.png"
+               alt="NASA Faded T-Shirt — Officially Licensed" loading="lazy" />
+          <span class="badge-licensed">Officially Licensed</span>
+        </div>
+        <div class="product-body">
+          <div class="product-fandom">🚀 NASA Official</div>
+          <div class="product-name">NASA Faded Vintage Unisex T-Shirt</div>
+          <div class="product-footer">
+            <div class="product-price">$28.95</div>
+            <a href="https://senprints.com/nasa-nasa-faded-unisex-crew-neck-t-shirt?utm_source=authenticfangifts&utm_medium=trending&utm_campaign=nasa-faded"
+               target="_blank" class="product-btn">Shop ↗</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="products-disclaimer fade-up">
+      * AuthenticFanGifts is an affiliate partner of SenPrints.com. We only recommend officially licensed products.
+      All prices shown are current retail prices.
+    </p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 6 — WHY CHOOSE US
+============================================================ -->
+<section id="trust">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag">⭐ Our Promise</div>
+      <h2>Why Fans Trust AuthenticFanGifts</h2>
+      <p style="color:rgba(255,255,255,.65)">We're fans ourselves. We built this guide because we got burned by fakes — and you shouldn't have to.</p>
+    </div>
+
+    <div class="trust-grid">
+      <div class="trust-card fade-up">
+        <span class="trust-icon">🏅</span>
+        <h3>100% Official Licensed</h3>
+        <p>We only link to stores with verified licensing agreements. No bootlegs, no gray-market sellers — ever.</p>
+      </div>
+      <div class="trust-card fade-up delay-1">
+        <span class="trust-icon">🎯</span>
+        <h3>Curated by Real Fans</h3>
+        <p>Every pick is hand-selected by fandom enthusiasts who actually know the difference between a good and a bad licensed product.</p>
+      </div>
+      <div class="trust-card fade-up delay-2">
+        <span class="trust-icon">💬</span>
+        <h3>Transparent Pricing</h3>
+        <p>We show you the real retail price upfront. No hidden fees, no surprise markups. What you see is what you pay.</p>
+      </div>
+      <div class="trust-card fade-up delay-3">
+        <span class="trust-icon">🛡️</span>
+        <h3>Risk-Free Shopping</h3>
+        <p>Our guides teach you exactly what to look for so every purchase is informed. Full affiliate disclosure — always.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 7 — NEWSLETTER
+============================================================ -->
+<section id="newsletter">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="fade-up">
+        <div class="section-tag" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.3)">📩 Free Newsletter</div>
+        <h2>Get Monthly Licensed Drops &amp; Gift Ideas</h2>
+        <p>5–7 curated licensed merch picks every month, organized by fandom. Free — unsubscribe anytime.</p>
+
+        <form class="newsletter-form" id="newsletterForm" onsubmit="handleNewsletter(event)">
+          <input type="email" class="newsletter-input" placeholder="your@email.com" required id="emailInput" />
+          <button type="submit" class="newsletter-submit">Subscribe Free →</button>
+        </form>
+
+        <div class="fandom-checks">
+          <div class="fandom-check"><label><input type="checkbox"> 🟢 Grinch</label></div>
+          <div class="fandom-check"><label><input type="checkbox"> 🚀 NASA</label></div>
+          <div class="fandom-check"><label><input type="checkbox"> 🦇 Batman</label></div>
+          <div class="fandom-check"><label><input type="checkbox"> 🎃 Horror</label></div>
+          <div class="fandom-check"><label><input type="checkbox"> ☕ Friends</label></div>
+          <div class="fandom-check"><label><input type="checkbox" checked> ✨ All Fandoms</label></div>
+        </div>
+
+        <div class="newsletter-toast" id="newsletterToast">
+          🎉 You're in! Check your inbox for your first licensed merch drop.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 8 — TESTIMONIALS
+============================================================ -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="section-tag dark">💬 Social Proof</div>
+      <h2>What Fans Are Saying</h2>
+      <p>Real fans, real reviews — this is why we do what we do.</p>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Finally found a site that actually explains what 'officially licensed' means. Bought the NASA shirt for my engineer dad and it looked incredible. Zero regrets."</p>
+        <div class="testimonial-author">
+          <div class="avatar" style="background: #0A2540">M</div>
+          <div class="testimonial-author-info">
+            <strong>Marcus T.</strong>
+            <span>🇺🇸 Houston, Texas — NASA Fan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-up delay-1">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"I was so tired of ordering Batman shirts on Amazon that fell apart after one wash. The gift guide here led me to a real licensed tee. Night and day difference in quality."</p>
+        <div class="testimonial-author">
+          <div class="avatar" style="background: #00A86B">S</div>
+          <div class="testimonial-author-info">
+            <strong>Sarah K.</strong>
+            <span>🇬🇧 London, UK — DC Comics Fan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card fade-up delay-2">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"The Real vs Fake guide opened my eyes. Bought a 'Grinch shirt' on Etsy last year — turned out to be a bootleg. Now I always check here first before buying any licensed merch."</p>
+        <div class="testimonial-author">
+          <div class="avatar" style="background: #6A2BFC">J</div>
+          <div class="testimonial-author-info">
+            <strong>James R.</strong>
+            <span>🇨🇦 Toronto, Canada — Grinch Collector</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">Authentic<span>Fan</span>Gifts</div>
+        <p>Your trusted guide for officially licensed fandom merchandise. Curated by fans, for fans — since 2025.</p>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="TikTok">📱</a>
+          <a href="#" class="social-link" aria-label="Pinterest">📌</a>
+          <a href="#" class="social-link" aria-label="Instagram">📷</a>
+          <a href="#" class="social-link" aria-label="Reddit">🔴</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Gift Guides</h4>
+        <div class="footer-links">
+          <a href="#gift-guides">🎄 Christmas Guide</a>
+          <a href="#gift-guides">🎃 Halloween Guide</a>
+          <a href="#gift-guides">💝 Valentine's Guide</a>
+          <a href="#gift-guides">👨 Father's Day</a>
+          <a href="#gift-guides">All Gift Guides →</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Popular Fandoms</h4>
+        <div class="footer-links">
+          <a href="#fandoms">The Grinch</a>
+          <a href="#fandoms">NASA Official</a>
+          <a href="#fandoms">Batman / DC</a>
+          <a href="#fandoms">The Terminator</a>
+          <a href="#fandoms">All Fandoms →</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Learn</h4>
+        <div class="footer-links">
+          <a href="#real-vs-fake">Real vs Fake Guide</a>
+          <a href="#">About Us</a>
+          <a href="#newsletter">Free Newsletter</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-disclaimer">
+        AuthenticFanGifts is an affiliate partner. We only recommend officially licensed products. Powered by
+        <a href="https://senprints.com" target="_blank" style="color:var(--gold)">SenPrints.com</a>
+      </div>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Affiliate Disclosure</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Mobile Sticky CTA -->
+<div class="mobile-sticky-cta">
+  <a href="#gift-guides">🛍️ Explore Gift Guides</a>
+</div>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+  /* ---- Navbar scroll effect ---- */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  /* ---- Hamburger / Mobile Menu ---- */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    const spans = hamburger.querySelectorAll('span');
+    if (mobileMenu.classList.contains('open')) {
+      spans[0].style.transform = 'rotate(45deg) translate(5px,5px)';
+      spans[1].style.opacity = '0';
+      spans[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+    } else {
+      spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+  // Close mobile menu when clicking any mobile link
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    });
+  });
+
+  /* ---- Mobile accordion ---- */
+  function toggleSub(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('open');
+  }
+
+  /* ---- Scroll-triggered fade-up ---- */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* ---- Newsletter form ---- */
+  function handleNewsletter(e) {
+    e.preventDefault();
+    const toast = document.getElementById('newsletterToast');
+    toast.style.display = 'block';
+    document.getElementById('emailInput').value = '';
+    setTimeout(() => { toast.style.display = 'none'; }, 5000);
+  }
+
+  /* ---- Close mobile menu on outside click ---- */
+  document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && !hamburger.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+      hamburger.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+    }
+  });
+</script>
+
+</body>
+</html>
